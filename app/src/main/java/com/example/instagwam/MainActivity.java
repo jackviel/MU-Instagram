@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button bCaptureImage;
     private ImageView ivPostImage;
     private Button bSubmit;
+    private Button bFeed;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         bCaptureImage = findViewById(R.id.bCaptureImage);
         ivPostImage = findViewById(R.id.ivPostImage);
         bSubmit = findViewById(R.id.bSubmit);
+        bFeed = findViewById(R.id.bFeed);
 
         //queryPosts();
 
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "onClick Logout button");
             ParseUser.logOut();
             Intent i = new Intent(MainActivity.this, LoginScreenActivity.class);
+            startActivity(i);
+        });
+
+        bFeed.setOnClickListener(v -> {
+            Log.i(TAG, "onClick Feed button");
+            Intent i = new Intent(MainActivity.this, FeedActivity.class);
             startActivity(i);
         });
     }

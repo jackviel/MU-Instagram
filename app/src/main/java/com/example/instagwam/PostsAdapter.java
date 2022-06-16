@@ -101,7 +101,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         Post post = posts.get(position);
                         ParseUser postUser = post.getUser();
                         Intent intent = new Intent(context, ProfileScreenActivity.class);
-                        intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(postUser));
+                        intent.putExtra(ParseUser.class.getSimpleName(), Parcels.wrap(postUser));
                         context.startActivity(intent);
                     }
                 }
@@ -115,7 +115,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         Post post = posts.get(position);
                         ParseUser postUser = post.getUser();
                         Intent intent = new Intent(context, ProfileScreenActivity.class);
-                        intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(postUser));
+                        intent.putExtra(ParseUser.class.getSimpleName(), Parcels.wrap(postUser));
                         context.startActivity(intent);
                     }
                 }

@@ -59,7 +59,6 @@ public class FeedActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(this);
         rvPosts.setLayoutManager(manager);
         // set the layout manager on the recycler view
-        rvPosts.setLayoutManager(new LinearLayoutManager(this));
         // query posts from Parstagram
         queryPosts();
         scrollListener = new EndlessRecyclerViewScrollListener(manager) {

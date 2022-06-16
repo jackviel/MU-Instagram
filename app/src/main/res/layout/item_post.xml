@@ -8,12 +8,22 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:text="rahul" />
+        tools:text="user" />
+
+    <ImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="65dp"
+        android:layout_height="58dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvTimeAgo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/ivImage"
@@ -28,4 +38,5 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         tools:text="trying to look hipster" />
+
 </LinearLayout>

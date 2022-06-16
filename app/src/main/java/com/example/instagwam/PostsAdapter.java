@@ -8,15 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
@@ -59,40 +65,88 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return posts.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvUsername;
-        private ImageView ivImage;
         private TextView tvDescription;
+        private TextView tvTimeAgo;
+        private ImageView ivImage;
+        private ImageView ivProfilePic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvUsername = itemView.findViewById(R.id.tvDescription);
-            ivImage = itemView.findViewById(R.id.ivImage);
+            tvUsername = itemView.findViewById(R.id.tvUsername);
             tvDescription = itemView.findViewById(R.id.tvDescription);
-            itemView.setOnClickListener(this);
+            tvTimeAgo = itemView.findViewById(R.id.tvTimeAgo);
+            ivImage = itemView.findViewById(R.id.ivImage);
+            ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
+            ivImage.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Post post = posts.get(position);
+                        Intent intent = new Intent(context, PostDetailsActivity.class);
+                        intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
+                        context.startActivity(intent);
+                    }
         }
+        });
+            ivProfilePic.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Post post = posts.get(position);
+                        ParseUser postUser = post.getUser();
+                        Intent intent = new Intent(context, ProfileScreenActivity.class);
+                        intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(postUser));
+                        context.startActivity(intent);
+                    }
+                }
+            });
+            tvUsername.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Post post = posts.get(position);
+                        ParseUser postUser = post.getUser();
+                        Intent intent = new Intent(context, ProfileScreenActivity.class);
+                        intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(postUser));
+                        context.startActivity(intent);
+                    }
+                }
+            });
+        }
+
 
         public void bind(Post post) {
             //Bind the post data to the view elements
-            tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
+            tvDescription.setText(post.getDescription());
+
+            DateFormat formatter = new SimpleDateFormat("MMMM D");
+            String date = formatter.format(post.getCreatedAt());
+            int dateLength = date.length();
+            tvTimeAgo.setText(date.substring(0, dateLength - 2) + date.substring(dateLength - 1, dateLength));
+
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             } else {
                 Glide.with(context).load(R.drawable.icon).into(ivImage);
             }
-        }
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Post post = posts.get(position);
-                Intent intent = new Intent(context, PostDetailsActivity.class);
-                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
-                context.startActivity(intent);
+            ParseUser postUser = post.getUser();
+            ParseFile profilePic = postUser.getParseFile("profilePic");
+            if (profilePic != null) {
+                Glide.with(context).load(profilePic.getUrl()).into(ivProfilePic);
+            } else {
+                Glide.with(context).load(R.drawable.icon).into(ivProfilePic);
             }
         }
+        }
     }
-}

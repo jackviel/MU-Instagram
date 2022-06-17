@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.instagwam.fragments.PostsFragment;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -24,10 +25,15 @@ public class LoginScreenActivity extends AppCompatActivity {
     private Button bLogin;
     private Button bRegister;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.nav_logo_whiteout);
 
         if (ParseUser.getCurrentUser() != null){
             goMainActivity();
@@ -126,7 +132,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
 
     private void goMainActivity() {
-        Intent i = new Intent(LoginScreenActivity.this, MainActivity.class);
+        Intent i = new Intent(LoginScreenActivity.this, PostsFragment.class);
         startActivity(i);
         finish();
     }

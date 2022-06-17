@@ -45,12 +45,10 @@ public class ComposeFragment extends Fragment {
     public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
-    private Button bLogout;
     private EditText etDescription;
     private Button bCaptureImage;
     private ImageView ivPostImage;
     private Button bSubmit;
-    private Button bFeed;
     public ProgressBar pb;
     private File photoFile;
     public String photoFileName = "photo.jpg";
@@ -66,7 +64,6 @@ public class ComposeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bLogout = view.findViewById(R.id.bLogout);
         etDescription = view.findViewById(R.id.etDescription);
         bCaptureImage = view.findViewById(R.id.bCaptureImage);
         ivPostImage = view.findViewById(R.id.ivPostImage);
@@ -91,13 +88,6 @@ public class ComposeFragment extends Fragment {
             }
             ParseUser currentUser = ParseUser.getCurrentUser();
             savePost(description, currentUser, photoFile);
-        });
-
-        bLogout.setOnClickListener(v -> {
-            Log.i(TAG, "onClick Logout button");
-            ParseUser.logOut();
-            Intent i = new Intent(getContext(), LoginScreenActivity.class);
-            startActivity(i);
         });
     }
     private void launchCamera() {

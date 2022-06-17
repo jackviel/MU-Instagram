@@ -99,9 +99,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                             return;
                         }
-                        Intent i = new Intent(LoginScreenActivity.this, FeedActivity.class);
-                        startActivity(i);
-                        finish();
+                        goMainActivity();
                         Toast.makeText(LoginScreenActivity.this, "Logged in", Toast.LENGTH_SHORT);
                     }
                 });
